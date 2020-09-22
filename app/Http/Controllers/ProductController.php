@@ -6,8 +6,8 @@ use App\Http\Requests\StoreUpdateProduct;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
-use Request;
 use Symfony\Component\HttpFoundation\Response;
+
 class ProductController extends Controller
 {
     public function __construct()
@@ -34,7 +34,7 @@ class ProductController extends Controller
         $product = Product::create($request->all());
         return response([
             'data' => new ProductResource($product)
-        ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
 
@@ -50,9 +50,12 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, Product $product)
+    public function update(StoreUpdateProduct $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return response([
+            'data' => new ProductResource($product)
+        ], Response::HTTP_CREATED);
     }
 
 
